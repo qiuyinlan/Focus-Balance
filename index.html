@@ -9,7 +9,7 @@
   <!-- Tailwind CSS: 负责精美的 UI 样式 -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Babel Standalone: 这是一个黑科技，允许浏览器直接运行你写的 .tsx 文件 -->
+  <!-- Babel Standalone: 允许浏览器直接运行 .tsx 文件 -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
@@ -70,14 +70,14 @@
     }
   </style>
 
-  <!-- 导入地图：告诉浏览器从哪里下载 React 等库 -->
+  <!-- 导入地图：修正 react-dom/client 的指向 -->
   <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom": "https://esm.sh/react-dom@^19.2.3",
-    "react-dom/client": "https://esm.sh/react-dom@^19.2.3",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.462.0",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/"
   }
@@ -87,9 +87,8 @@
 <body>
   <div id="root"></div>
 
-  <!-- 重要：这里设置 type="text/babel" 并启用 typescript/react 预设 -->
+  <!-- 设置 type="text/babel" 并启用 typescript/react 预设 -->
   <script type="text/babel" data-presets="typescript,react" data-type="module">
-    // 直接导入你的入口文件
     import './index.tsx';
   </script>
 </body>
