@@ -12,19 +12,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* 定义动态视口高度变量 */
+      /* 使用 100dvh 适配移动端动态工具栏 */
       --app-height: 100dvh;
     }
     html, body { 
       margin: 0;
       padding: 0;
       width: 100vw;
-      /* 核心改进 1：使用 min-height 确保最小高度覆盖动态工具栏 */
       min-height: var(--app-height);
       background: #F7F9F2; 
       font-family: 'Inter', sans-serif; 
       touch-action: manipulation;
-      /* 核心改进 2：移除全局 overflow: hidden，允许弹性空间防止切掉底部 */
       overflow-x: hidden;
       overflow-y: auto;
     }
@@ -48,12 +46,14 @@
     }
     .animate-shovel { animation: shovel-action-right 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
     
+    /* 优化的金币抛物线动画 */
     @keyframes coin-fly-to-pile {
       0% { transform: translate(0, 0) scale(1); opacity: 1; }
-      80% { opacity: 1; transform: translate(calc(var(--tw-translate-x) * 0.8), calc(var(--tw-translate-y) * 0.8)) scale(1); }
-      100% { transform: translate(var(--tw-translate-x), var(--tw-translate-y)) scale(0.8); opacity: 0; }
+      20% { transform: translate(calc(var(--tw-translate-x) * 0.2), -50px) scale(1.2); } /* 向上跳跃 */
+      80% { opacity: 1; transform: translate(calc(var(--tw-translate-x) * 0.85), calc(var(--tw-translate-y) * 0.85)) scale(1); }
+      100% { transform: translate(var(--tw-translate-x), var(--tw-translate-y)) scale(0.6); opacity: 0; }
     }
-    .coin-particle { animation: coin-fly-to-pile 0.7s cubic-bezier(0.1, 0.7, 0.3, 1) forwards; }
+    .coin-particle { animation: coin-fly-to-pile 0.75s cubic-bezier(0.1, 0.7, 0.3, 1) forwards; }
     
     @keyframes shine {
       0%, 100% { filter: brightness(1) drop-shadow(0 0 5px rgba(255, 223, 0, 0.3)); }
@@ -198,8 +198,13 @@
         const newBurst = [];
         for (let i = 0; i < num; i++) {
           const id = coinIdCounter.current++;
-          newBurst.push({ id, x: 80 + Math.random() * 80, y: 15 + Math.random() * 30 });
-          setTimeout(() => setCoins(prev => prev.filter(c => c.id !== id)), 700);
+          // 向上跳跃并飞向右侧金山（x 正向偏移）
+          newBurst.push({ 
+            id, 
+            x: 100 + Math.random() * 120, 
+            y: 10 + Math.random() * 30 
+          });
+          setTimeout(() => setCoins(prev => prev.filter(c => c.id !== id)), 750);
         }
         setCoins(prev => [...prev, ...newBurst]);
       };
@@ -212,6 +217,7 @@
           setElapsedSeconds(prev => {
             const next = prev + deltaTime;
             setMoney(m => m + calculateRatePerSecond(next, hourlyWage) * deltaTime);
+            // 配合挖掘节奏产生金币
             if (time - lastCoinBurstRef.current > 800) {
               lastCoinBurstRef.current = time;
               spawnCoinBurst();
@@ -249,7 +255,7 @@
             </div>
           </div>
 
-          {/* Main Game Stage - 使用 flex-grow 自动填满空间 */}
+          {/* Main Game Stage */}
           <div className="flex-grow flex flex-col items-center justify-end w-full overflow-hidden min-h-0">
             <div className="mb-4 sm:mb-24 z-10 origin-bottom">
               <MoneyTree growthScale={growthScale} />
@@ -264,13 +270,23 @@
                 </div>
               </div>
               
+              {/* 小人位置 */}
               <div className="absolute -top-28 sm:-top-60 left-1/2 -translate-x-12 sm:-translate-x-40 z-30">
                 <LittleDigger isDigging={isActive} gender={gender} />
+              </div>
+
+              {/* 金币抛洒容器：位于小人挖掘处附近 */}
+              <div className="absolute -top-16 left-1/2 -translate-x-4 w-1 flex justify-center z-40 pointer-events-none">
+                {coins.map(coin => (
+                  <div key={coin.id} className="absolute coin-particle" style={{ '--tw-translate-x': `${coin.x}px`, '--tw-translate-y': `${coin.y}px` }}>
+                    <div className="w-5 h-5 sm:w-7 sm:h-7 bg-yellow-400 border-2 border-yellow-600 rounded-full flex items-center justify-center font-bold text-[8px] sm:text-[10px] shadow-lg text-yellow-900 ring-1 ring-yellow-200">￥</div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
 
-          {/* Control Panel - 置于普通文档流底部，增加显著的 padding-bottom 强行撑开空间 */}
+          {/* Control Panel */}
           <div className="w-full flex-shrink-0 bg-white/80 backdrop-blur-lg border-t border-white/40 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] z-[100] px-4 pt-4 pb-[calc(5rem+env(safe-area-inset-bottom,40px))]">
             <div className="max-w-md mx-auto flex items-center justify-between gap-2">
               <button 
