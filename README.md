@@ -1,20 +1,51 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# 🌳 专注力金钱树 (Focus Gold Tree)
 
-# Run and deploy your AI Studio app
+> **将你的深度专注，转化为看得见的数字财富。**
 
-This contains everything you need to run your app locally.
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![React](https://img.shields.io/badge/React-19-61dafb.svg)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-3.4-38b2ac.svg)
 
-View your app in AI Studio: https://ai.studio/apps/drive/185mJonAw0lIFQL7ye_L2RPfCNyMje2yR
+`Focus Gold Tree` 是一款专为拖延症和手机成瘾者设计的“游戏化”专注计时器。不同于传统的枯燥闹钟，它通过**复利增长模型**和**实时视觉反馈**，让枯燥的专注过程变成一场激动人心的财富积累之旅。
 
-## Run Locally
+## 🌟 核心理念：为什么选择它？
 
-**Prerequisites:**  Node.js
+在信息碎片化的时代，深度专注 30 分钟的价值远高于 10 次 3 分钟的碎片时间。本项目通过数学公式模拟了这种价值：**专注时间越长，每秒赚取的金币就越多。**
 
+### 🎮 游戏化设计
+- **不断生长的金钱树**：随着专注时长增加，背景中的金钱树会愈发茂盛，挂满金币。
+- **勤奋的小矿工**：一个可爱的 2D 小人会伴随你的专注不停挖掘，将金币源源不断地送入你的金库。
+- **实时金山堆积**：挖出的金币会在屏幕一角堆成闪闪发光的金山，带给你直观的成就感。
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 🚀 功能亮点
+
+- **📈 复利引擎**：内置指数级增长算法。前 30 分钟是缓慢积累期，一旦突破临界点，收益将呈爆发式增长。
+- **💎 沉浸式 HUD**：右上角配备高精度计时器与财富显示屏，每一分钱的跳动都清晰可见。
+- **💰 自定义时薪**：你可以设定自己认为“专注力”应得的时薪，让财富积累更具私人意义。
+- **📱 纯净静态体验**：无服务器依赖、无 API 限制、无隐私泄露风险。代码完全运行在浏览器本地。
+- **⚡️ 极速访问**：支持 PWA，可“添加到主屏幕”作为独立 App 使用，秒速开启专注。
+
+## 🧮 经济模型 (The Math)
+
+应用采用以下公式计算即时收益：
+$$Rate = \frac{HourlyWage}{3600} \times 0.1 \times (1.08^{minutes})$$
+
+- **初始期**：以设定的 10% 速率起步。
+- **转折点**：约在第 30 分钟左右，即时收益率达到你设定的 100% 时薪。
+- **爆发期**：30 分钟后，复利效应让你的每一秒专注都变得异常昂贵。
+
+## 🛠️ 技术栈
+
+本项目使用了目前最先进的前端技术框架：
+- **React 19**: 响应式 UI 开发。
+- **Tailwind CSS**: 极致的组件样式与动画。
+- **Lucide Icons**: 精美的矢量图标库。
+- **CSS3 Keyframes**: 高性能平滑动画（小人挖掘、金币飞舞）。
+
+## 🌐 在线体验
+
+你可以直接通过任何浏览器打开本项目进行专注练习。建议全屏使用以获得最佳沉浸感。
+
+---
+
+*如果你喜欢这个项目，欢迎给它一个 ⭐ Star！让更多人找回失去的专注力。*
